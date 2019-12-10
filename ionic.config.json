@@ -1,5 +1,7 @@
 {
   "name": "InnovationAssessmentApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

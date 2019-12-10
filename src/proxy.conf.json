@@ -1,0 +1,7 @@
+{
+    "/api.typeform.com/*": {
+        "target": "http://localhost:8100",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

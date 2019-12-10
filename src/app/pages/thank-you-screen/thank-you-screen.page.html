@@ -1,0 +1,96 @@
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col size='12' style = "align-content: center; justify-content: center; text-align: center; vertical-align: middle;">
+        <ion-card>
+            <ion-card-header>
+              <ion-card-title> Thank You! </ion-card-title>
+              <ion-card-subtitle> You are now ready to discover the results of the assessment.</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              You can also reach out to us here. 
+
+              <ion-button (click) = "formatData()"> See My Results </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+    </ion-col>
+
+  </ion-row>
+  <div *ngIf="dataLoaded">
+
+  <ion-row>
+    <ion-col size = '6'>
+        <ion-card>
+            <ion-card-content>
+      
+                <canvas #matrixChart >{{ matrixChart }}</canvas>
+      
+            </ion-card-content>
+      
+      
+          </ion-card>
+    </ion-col>
+    <ion-col>
+        <ion-card>
+            <ion-card-header>
+              Legend
+            </ion-card-header>
+            <ion-card-content>
+      
+      
+            </ion-card-content>
+      
+      
+          </ion-card>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col size='12'>
+        <ion-card>
+            <ion-card-content>
+      
+                <canvas #barChart >{{ barChart }}</canvas>
+      
+            </ion-card-content>
+      
+      
+          </ion-card>
+      
+    </ion-col>
+
+  </ion-row>
+  <ion-row>
+      <ion-col size='6'>
+          <ion-card>
+              <ion-card-content>
+        
+                  <canvas #priorityChart >{{ priorityChart }}</canvas>
+        
+              </ion-card-content>
+        
+        
+            </ion-card>
+        
+      </ion-col>
+      <ion-col size='6'>
+          <ion-card>
+              <ion-card-content>
+        
+                  <canvas #maturityChart >{{ maturityChart }}</canvas>
+        
+              </ion-card-content>
+        
+        
+            </ion-card>
+        
+      </ion-col>
+
+  </ion-row>
+</div>
+
+</ion-grid>
+
+</ion-content>
