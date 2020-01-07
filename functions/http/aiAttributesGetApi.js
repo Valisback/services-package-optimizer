@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const readData = require('../utils/readData.');
+const readData = require('../utils/readData');
 
 
 module.exports = functions.https.onRequest((req, res) => {

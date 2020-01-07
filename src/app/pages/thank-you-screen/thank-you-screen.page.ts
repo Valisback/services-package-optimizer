@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ApiCallsService } from 'src/app/shared/api-calls/api-calls.service';
 import { FormResponse } from 'src/app/shared/models/formResponse';
-import { NavController } from '@ionic/angular';
+import { NavController, IonContent } from '@ionic/angular';
 import { Chart } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
 import { LineToLineMappedSource } from 'webpack-sources';
@@ -17,11 +17,13 @@ export class ThankYouScreenPage implements OnInit {
   formTag: string;
   currentFormAnswers: FormResponse;
   questions: string[] = [];
-  maturity_score: number[] = [];
-  priority_score: number[] = [];
+  maturity_score: number[];
+  priority_score: number[];
 
   totalNumQuestions;
   dataLoaded = false; 
+
+  @ViewChild(IonContent, {static: false}) content: IonContent;
 
   @ViewChild('barChart', {static: false}) private barchartRef;
   @ViewChild('matrixChart', {static: false}) private matrixchartRef;
@@ -44,6 +46,7 @@ export class ThankYouScreenPage implements OnInit {
     private changeDetector: ChangeDetectorRef,
   ) { }
 
+
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params.tag !== undefined) {
@@ -60,11 +63,14 @@ export class ThankYouScreenPage implements OnInit {
 }
 
   formatData() {
-   this.questions = this.currentFormAnswers.responses.split('###');
-   let qcount = 1;
-   let i = 1;
-   this.questions.forEach( value => {
-     if ( !value.includes('Tag') && value.length > 0) {
+    this.priority_score = [];
+    this.maturity_score = [];
+    this.questions = this.currentFormAnswers.responses.split('###');
+    let qcount = 1;
+    let i = 1;
+    this.questions.forEach( value => {
+     if ( !value.includes('Tag') && !value.includes('company are you from')
+     && !value.includes('your current role') && value.length > 0) {
       if (!this.maturity_score[qcount]) {
         this.maturity_score[qcount] = 0;
       }
@@ -81,16 +87,16 @@ export class ThankYouScreenPage implements OnInit {
      }
 
    });
-   this.totalNumQuestions = qcount;
-   this.maturity_score.shift();
-   this.priority_score.shift();
-   this.dataLoaded = true;
-   this.changeDetector.detectChanges();
-   this.initMatrixChart();
-   this.initBarChart();
-   this.initHorizontalPriorityChart();
-   this.initHorizontalMaturityChart();
-
+    this.totalNumQuestions = qcount;
+    this.maturity_score.shift();
+    this.priority_score.shift();
+    this.dataLoaded = true;
+    this.changeDetector.detectChanges();
+    this.initMatrixChart();
+    this.initBarChart();
+    this.initHorizontalPriorityChart();
+    this.initHorizontalMaturityChart();
+   //this.content.scrollToPoint(0, 330, 1500);
   }
 
 
@@ -117,6 +123,8 @@ export class ThankYouScreenPage implements OnInit {
       datasets.push({data: data[i],
         label: this.labels[i],
         backgroundColor: backgroundColor,
+        pointRadius: 4,
+        pointHoverRadius: 4
       });
   }
 
@@ -148,10 +156,15 @@ export class ThankYouScreenPage implements OnInit {
         },
         scales: {
           xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Priority'
+            },
             ticks: {
               beginAtZero: true,
               max: 10,
               stepValue: 1,
+              stepSize: 1,
             },
             type: 'myLinear',
             zeroLineTick: 5,
@@ -164,9 +177,14 @@ export class ThankYouScreenPage implements OnInit {
             display: true,
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Maturity'
+            },
             ticks: {
               max: 10,
               stepValue: 1,
+              stepSize: 1,
               beginAtZero: true,
             },
 
@@ -196,9 +214,6 @@ export class ThankYouScreenPage implements OnInit {
         backgroundColor: 'rgba(255, 255, 50, 0.7)',
         label: 'Priority'
       }];
-    // for (let q = 1; q < this.totalNumQuestions; q++ ) {
-
-    // }
 
 
     this.barChart = new Chart(this.barchartRef.nativeElement, {
@@ -217,7 +232,7 @@ export class ThankYouScreenPage implements OnInit {
             ticks: {
               beginAtZero: true,
               max: 10,
-              stepValue: 1,
+              stepSize: 2,
             },
             display: true
           }],
@@ -226,6 +241,8 @@ export class ThankYouScreenPage implements OnInit {
               beginAtZero: true,
               max: 10,
               stepValue: 1,
+              stepSize: 2,
+
             },
             display: true
           }],

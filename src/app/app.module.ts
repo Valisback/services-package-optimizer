@@ -7,6 +7,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AngularFireModule } from '@angular/fire';
+import { MatStepperModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +23,9 @@ import { environment } from '../environments/environment';
     IonicModule.forRoot(),
     OAuthModule.forRoot(),
     HttpClientModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    MatStepperModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AppRoutingModule],

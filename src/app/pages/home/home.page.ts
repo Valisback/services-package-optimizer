@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import * as typeformEmbed from '@typeform/embed';
 import { ApiCallsService } from '../../shared/api-calls/api-calls.service';
-import { NavController } from '@ionic/angular';
+import { NavController, IonContent } from '@ionic/angular';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -12,7 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements AfterViewInit {
-  @ViewChild('myDiv', {static: true}) divView: ElementRef;
+  @ViewChild(IonContent, {static: false}) content: IonContent;
+  @ViewChild('background', {static: false}) background: ElementRef;
+
   FORM_ID = 'hs1e1S';
   tag;
 
@@ -22,12 +24,12 @@ export class HomePage implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.openSurvey();
+    //this.openSurvey();
+    
 
   }
 
   openSurvey() {
-    console.log('myDiv: ', this.divView);
     this.tag = this.generateId();
     const popup = typeformEmbed.makePopup(
       'https://aienewyork.typeform.com/to/' + this.FORM_ID + '?tag=' + this.tag.toString(), // URL of the typeform
@@ -61,4 +63,9 @@ export class HomePage implements AfterViewInit {
     }
     return s4() + s4() + s4() + s4() + s4();
   }
+
+  ScrollToBottom() {
+    const height = this.background.nativeElement.offsetHeight;
+    this.content.scrollToPoint(0, height, 600);
+    }
 }
