@@ -1,179 +1,105 @@
 <ion-content fullscreen [scrollEvents]="true">
-    <div class="background">
-        <div class="page-header">
-          <div id="header-logo">
-            <img src="assets/homepage/Capgemini_Logo_White.png" />
+  <app-header lastpage="true" [title]="title" [subtitle]="subtitle" (buttonClicked)="formatData($event)"></app-header>
+
+  <div *ngIf="dataLoaded">
+  <div class="section-body div-1">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
+          <div id="graph-title">
+            How much of a priority and how <strong>ready</strong> are we to drive these enablers
+            today?
           </div>
-          <div id="header-title">
-            Thank you for completing the assessment
+          <canvas #matrixChart>{{ matrixChart }}</canvas>
+        </ion-col>
+        <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
+          <ion-grid  class="flex-disp ion-no-padding ion-no-margin" >
+            <ion-row>
+              <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
+                <ion-list class="legend-container ion-no-padding ion-no-margin">
+                  <ion-item class="ion-no-padding">
+                    <ion-avatar id="legend-colorBox" slot="start">
+                      <div id="colorBox-content" [ngStyle]="{'background-color': actNowColor}"></div>
+                    </ion-avatar>
+                    <ion-label>
+                      <div id="texts-2">Act now</div>
+                      <div id="texts-3">High Priority, High Maturity</div>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item class="ion-no-padding">
+                    <ion-avatar id="legend-colorBox" slot="start">
+                      <div id="colorBox-content" [ngStyle]="{'background-color': canDoColor}"></div>
+                    </ion-avatar>
+                    <ion-label>
+                      <div id="texts-2">Can do</div>
+                      <div id="texts-3">Low Priority, High Maturity</div>
+                    </ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+                  <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
+                    <ion-list class="legend-container  ion-no-padding ion-no-margin" >
+                      <ion-item class="ion-no-padding">
+                        <ion-avatar slot="start" id="legend-colorBox">
+                          <div id="colorBox-content" [ngStyle]="{'background-color': fixExecutionColor}"></div>
+                        </ion-avatar>
+                        <ion-label>
+                          <div id="texts-2">Fix execution strategy</div>
+                          <div id="texts-3">High Priority, Low Maturity</div>
+                        </ion-label>
+                      </ion-item>
+                      <ion-item class="ion-no-padding">
+                        <ion-avatar slot="start" id="legend-colorBox">
+                          <div id="colorBox-content" [ngStyle]="{'background-color': avoidColor}"></div>
+                        </ion-avatar>
+                        <ion-label>
+                          <div id="texts-2">Avoid</div>
+                          <div id="texts-3">Low Priority, Low Maturity</div>
+                        </ion-label>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="section-body div-2">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
+          <div id="graph-title">
+          Enablers with the highest <strong>priority</strong> today
           </div>
-        </div>
-    
-        <ion-button
-          id="header-button"
-          shape="round"
-          strong="true"
-          (click)="formatData()"
-        >
-          View Results
-          <ion-icon style="padding-left: 3px;" name="arrow-down"></ion-icon>
-        </ion-button>
-      </div>
+          <canvas #priorityChart>{{ priorityChart }}</canvas>
+        </ion-col>
+        <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
+          <div id="graph-title">
+          Enablers with the highest <strong>maturity</strong> today
+          </div>
+          <canvas #maturityChart>{{ maturityChart }}</canvas>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
-<div *ngIf="dataLoaded" class="page-body">
-<ion-grid>
-  <ion-row>
-    <ion-col style="display: flex; flex-direction: column; justify-content: center;" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-        <ion-card style="flex-grow: 1; display: flex; flex-direction: column;">
-
-            <ion-card-header>
-              <ion-card-title>
-                  Detailed Assessment of each enabler
-              </ion-card-title>
-            </ion-card-header>
-            <ion-card-content style="flex-grow:1; display: flex; flex-direction: column; justify-content: center; align-content: center;">
-      
-                <canvas #matrixChart >{{ matrixChart }}</canvas>
-      
-            </ion-card-content>
-      
-      
-          </ion-card>
-    </ion-col>
-    <ion-col size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-        <ion-card >
-            <ion-card-header>
-              <ion-card-title>
-                  Legend
-              </ion-card-title>
-              <ion-card-subtitle>
-                Click on a specific point to see which enabler it refers to
-              </ion-card-subtitle>
-
-              
-            </ion-card-header>
-            <ion-card-content>
-                <ion-list>
-                    <ion-item>
-                        <ion-avatar id="legend-colorBox" slot="start">
-                        <div id = "colorBox-content" style="background-color: green;">
-
-                        </div>
-                        </ion-avatar>
-                      <ion-label>
-                        <h2>Act now</h2>
-                        <p> High Priority, High Maturity</p>
-                      </ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-avatar id="legend-colorBox" slot="start">
-                        <div id = "colorBox-content" style="background-color: yellow;">
-                        </div>
-                        </ion-avatar>
-                      <ion-label>
-                        <h2>Can do</h2>
-                        <p> High Priority, High Maturity</p>
-                      </ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-avatar slot="start" id="legend-colorBox" >
-                        <div  id = "colorBox-content" style="background-color: orange;">
-
-                        </div>
-                        </ion-avatar>
-                      <ion-label>
-                        <h2>Fix execution strategy</h2>
-                        <p> High Priority, High Maturity</p>
-                      </ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-avatar slot="start" id="legend-colorBox" >
-                        <div id = "colorBox-content" style="background-color: red;">
-
-                        </div>
-                        </ion-avatar>
-                      <ion-label>
-                        <h2>Avoid</h2>
-                        <p> High Priority, High Maturity</p>
-                      </ion-label>
-                    </ion-item>
-                     </ion-list>
-      
-            </ion-card-content>
-      
-      
-          </ion-card>
-    </ion-col>
-  </ion-row>
-
-
-  <ion-row>
-    <ion-col size='12'>
-        <ion-card>
-            <ion-card-header>
-                <ion-card-title>
-                    Comparison of priority and maturity of each enabler                
-                  </ion-card-title>
-              </ion-card-header>
-            <ion-card-content>
-      
-                <canvas #barChart >{{ barChart }}</canvas>
-      
-            </ion-card-content>
-      
-      
-          </ion-card>
-      
-    </ion-col>
-
-  </ion-row>
-  <ion-row>
-      <ion-col size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-          <ion-card>
-              <ion-card-header>
-                  <ion-card-title>
-                      List of enablers from highest to lowest priority
-                    </ion-card-title>
-                </ion-card-header>
-              <ion-card-content>
-        
-                  <canvas #priorityChart >{{ priorityChart }}</canvas>
-        
-              </ion-card-content>
-        
-        
-            </ion-card>
-        
-      </ion-col>
-      <ion-col size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-          <ion-card>
-              <ion-card-header>
-                  <ion-card-title>
-                      List of enablers from highest to lowest maturity
-                    </ion-card-title>
-                </ion-card-header>
-              <ion-card-content>
-        
-                  <canvas #maturityChart >{{ maturityChart }}</canvas>
-        
-              </ion-card-content>
-        
-        
-            </ion-card>
-        
-      </ion-col>
-
-  </ion-row>
-</ion-grid>
-
-<div id="footer">
-    <ion-button
-    id="footer-button"
-    shape="round"
-    strong="true" >
-      Send Results
-    </ion-button>
+  <div class="section-body div-3">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
+          <div id="graph-title" >
+          Looking at the enablers with the highest priority, where are the <strong>gaps</strong> we face today?
+          </div>
+        </ion-col>
+        <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
+          <canvas #barChart>{{ barChart }}</canvas>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <app-footer lastpage = "true" (learnMoreClicked) = "openContactPage()" (resultsClicked) = "sendResults()"></app-footer>
 </div>
 
-</div>
 </ion-content>

@@ -6,12 +6,14 @@ import { RouterModule } from '@angular/router';
 import { MatStepperModule } from '@angular/material';
 
 import { HomePage } from './home.page';
+import {GenericModule} from 'src/app/shared/components/generic/generic.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MatStepperModule,
+    GenericModule,
     IonicModule,
     RouterModule.forChild([
       {

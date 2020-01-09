@@ -1,0 +1,45 @@
+<div class = "section-body-last div-4" [ngStyle] = "{'background': lastpage? 'var(--ion-color-secondary)' : 'var(--ion-color-tertiary)'}">
+  <ion-grid>
+    <ion-row>
+
+      <ion-col id="column-1-right"
+      size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12"
+      offset-lg="3" offset-xl="3" offset-md="0" offset-sm="0" offset-xs="0" >
+        <div id="body-intro-text">
+          <div id="texts-2">
+            Applied Innovation Changes Everything.
+          </div>
+          <div id="texts-3">
+            At Capgemini's Applied Innovation Exchange, we provide an immersive and transformative environment to explore, discover, test and apply innovation. <br><br>
+            We provide rapid deployment with speed and scale. <br><br>
+            We can enable you to sustain the value of the innovation.
+          </div>
+        </div>
+        <div *ngIf="lastpage" class = "button-wrapper">
+          <div class = "ion-activatable" id="body-go-button" (click) = "buttonClicked('result')">
+            <div  id = "texts-2">
+              Send Results
+            </div>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+          <div class = "ion-activatable" id="body-go-button" (click) = "buttonClicked('more')">
+            <div  id = "texts-2">
+              Learn More
+            </div>
+            <ion-ripple-effect></ion-ripple-effect>
+          </div>
+        </div>
+        <div id="footer">
+          <div id="texts-2">
+            Please reach out to your local Capgemini AIE lead, or Lanny Cohen for more information.
+          </div>
+          <div id="footer-img">
+            <img src="assets/homepage/Capgemini_Logo_White.png">
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+    
+</div>

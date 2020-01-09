@@ -3,8 +3,11 @@ import { ApiCallsService } from 'src/app/shared/api-calls/api-calls.service';
 import { FormResponse } from 'src/app/shared/models/formResponse';
 import { NavController, IonContent } from '@ionic/angular';
 import { Chart } from 'chart.js';
+import { ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { ScoreData } from './models/scoreData';
 import { LineToLineMappedSource } from 'webpack-sources';
+import { ModalPage } from './component/modal/modal.page';
 
 
 @Component({
@@ -14,14 +17,20 @@ import { LineToLineMappedSource } from 'webpack-sources';
 })
 export class ThankYouScreenPage implements OnInit {
 
+  title = 'Thank you for completing the assessment!';
+  // tslint:disable-next-line: max-line-length
+  subtitle = 'We believe the winners will be the ones who re-wire their enterprise to out-think, out-do and outmaneuver disruption. They will be the ones who endure – by sustaining the value of innovation – delivering value across their entire enterprise.'
   formTag: string;
   currentFormAnswers: FormResponse;
   questions: string[] = [];
   maturity_score: number[];
   priority_score: number[];
 
+  priorityScore: number[];
+  results: ScoreData[];
+
   totalNumQuestions;
-  dataLoaded = false; 
+  dataLoaded = false;
 
   @ViewChild(IonContent, {static: false}) content: IonContent;
 
@@ -31,11 +40,22 @@ export class ThankYouScreenPage implements OnInit {
   @ViewChild('priorityChart', {static: false}) private prioritychartRef;
   @ViewChild('maturityChart', {static: false}) private maturitychartRef;
 
+  priorityColor = 'rgba(255, 48, 76, 0.8)';
+  maturityColor = 'rgba(18, 171, 219, 0.8)';
+  actNowColor = 'rgba(149, 230, 22, 0.7)';
+  canDoColor = 'rgba(18, 171, 219, 0.7)';
+  fixExecutionColor = 'rgba(43, 10, 61, 0.7)';
+  avoidColor = 'rgba(255, 48, 76, 0.7)';
+
   barChart: any;
   matrixChart: any;
   priorityChart: any;
   maturityChart: any;
 
+  jobTitle: string;
+  organization: string;
+
+  // Warning: The order of the labels much correspond to the order used in the typeform
   labels = ['Vision', 'Governance', 'Leadership', 'Trust', 'Op Model', 'Talent', 'Processes', 'Technology', 'Ecosystem', 'Mobilization'];
 
 
@@ -44,6 +64,7 @@ export class ThankYouScreenPage implements OnInit {
     private route: ActivatedRoute,
     private navCtrl: NavController,
     private changeDetector: ChangeDetectorRef,
+    public modalController: ModalController,
   ) { }
 
 
@@ -62,14 +83,15 @@ export class ThankYouScreenPage implements OnInit {
   });
 }
 
-  formatData() {
+  formatData(height: number) {
     this.priority_score = [];
     this.maturity_score = [];
+    this.results = [];
     this.questions = this.currentFormAnswers.responses.split('###');
     let qcount = 1;
     let i = 1;
     this.questions.forEach( value => {
-     if ( !value.includes('Tag') && !value.includes('company are you from')
+      if ( !value.includes('Tag') && !value.includes('company are you from')
      && !value.includes('your current role') && value.length > 0) {
       if (!this.maturity_score[qcount]) {
         this.maturity_score[qcount] = 0;
@@ -78,25 +100,35 @@ export class ThankYouScreenPage implements OnInit {
       if ( i % 5 === 0) {
         this.priority_score[qcount] = parseInt(n, 10);
         this.maturity_score[qcount] = (this.maturity_score[qcount] / 4) * 10;
+        const labelParam = new ScoreData(this.labels[qcount - 1], this.maturity_score[qcount], this.priority_score[qcount]);
+        this.results.push(labelParam);
         qcount++;
-        
       } else if ( n === 'true') {
         this.maturity_score[qcount]++;
       }
       i++;
+     } else {
+       if ( value.includes('your current role') ) {
+          this.jobTitle = value.split('\n\n')[1];
+       }
+       if ( value.includes('company are you from') ) {
+        this.organization = value.split('\n\n')[1];
      }
-
+     }
    });
+    this.orderResultsByPriority();
     this.totalNumQuestions = qcount;
-    this.maturity_score.shift();
-    this.priority_score.shift();
     this.dataLoaded = true;
     this.changeDetector.detectChanges();
     this.initMatrixChart();
     this.initBarChart();
     this.initHorizontalPriorityChart();
     this.initHorizontalMaturityChart();
-   //this.content.scrollToPoint(0, 330, 1500);
+    this.content.scrollToPoint(0, height, 600);
+  }
+
+  parseResponseString(responseString: string) {
+
   }
 
 
@@ -106,30 +138,27 @@ export class ThankYouScreenPage implements OnInit {
     for (let i = 0; i < this.totalNumQuestions - 1; i++) {
 
       let backgroundColor;
-      if (this.priority_score[i] > 5 && this.maturity_score[i] > 5 ) {
-        backgroundColor = 'rgba(25, 255, 25, 0.7)'; // Top right quadrant
-      } else if ( this.priority_score[i] > 5 ) {
-        backgroundColor = 'rgba(225, 128, 0, 0.7)'; // Bottom right quadrant
-      } else if ( this.maturity_score[i] > 5 ) {
-        backgroundColor = 'rgba(255, 255, 25, 0.7)'; // Top left quadrant
-      } else if (this.priority_score[i] == this.maturity_score[i]) {
+      if (this.results[i].priority > 5 && this.results[i].maturity > 5 ) {
+        backgroundColor = this.actNowColor; // Top right quadrant
+      } else if ( this.results[i].priority > 5 ) {
+        backgroundColor = this.fixExecutionColor; // Bottom right quadrant
+      } else if ( this.results[i].maturity > 5 ) {
+        backgroundColor = this.canDoColor; // Top left quadrant
+      } else if (this.results[i].priority === this.results[i].maturity) {
         backgroundColor = 'rgba(255, 255, 255, 1)'; // Middle
       } else {
-        backgroundColor = 'rgba(255, 25, 25, 0.7)'; // Bottom left quadrant
+        backgroundColor = this.avoidColor; // Bottom left quadrant
 
       }
 
-      data.push([{ x: this.priority_score[i], y: this.maturity_score[i] }]);
+      data.push([{ x: this.results[i].priority, y: this.results[i].maturity }]);
       datasets.push({data: data[i],
-        label: this.labels[i],
+        label: this.results[i].label,
         backgroundColor: backgroundColor,
-        pointRadius: 4,
-        pointHoverRadius: 4
+        pointRadius: 6,
+        pointHoverRadius: 6
       });
   }
-
-
-    console.log(datasets);
 
     this.matrixChart = new Chart(this.matrixchartRef.nativeElement, {
       type: 'scatter',
@@ -203,16 +232,49 @@ export class ThankYouScreenPage implements OnInit {
 
   }
 
+  getResultsLabels(): string[] {
+    const arrayLabels = [];
+    this.results.forEach( elem => {
+      arrayLabels.push(elem.label);
+    });
+    return arrayLabels;
+  }
+
+  getResultsMaturities(): number[] {
+    const arrayMaturities = [];
+    this.results.forEach( elem => {
+      arrayMaturities.push(elem.maturity);
+    });
+    return arrayMaturities;
+  }
+
+  getResultsPriorities(): number[] {
+    const arrayPriorities = [];
+    this.results.forEach( elem => {
+      arrayPriorities.push(elem.priority);
+    });
+    return arrayPriorities;
+  }
+
+  orderResultsByPriority() {
+    this.results = this.results.sort((a, b) => (a.priority > b.priority ) ? -1 : 1 ); // Sorting array by priority
+  }
+
   initBarChart() {
-    let datasets = [{
-      data: this.maturity_score,
-      backgroundColor: 'rgba(102, 178, 255, 0.7)',
-      label: 'Maturity'
-    },
+    const maturities = this.getResultsMaturities();
+    const priorities = this.getResultsPriorities();
+    const labels = this.getResultsLabels();
+    
+    let datasets = [
       {
-        data: this.priority_score,
-        backgroundColor: 'rgba(255, 255, 50, 0.7)',
+        data: priorities,
+        backgroundColor: this.priorityColor,
         label: 'Priority'
+      },
+      {
+        data: maturities,
+        backgroundColor: this.maturityColor,
+        label: 'Maturity'
       }];
 
 
@@ -220,7 +282,7 @@ export class ThankYouScreenPage implements OnInit {
       type: 'bar',
       data: {
         // tslint:disable-next-line: max-line-length
-        labels: this.labels,
+        labels: labels,
         datasets: datasets
       },
       options: {
@@ -252,33 +314,51 @@ export class ThankYouScreenPage implements OnInit {
   }
 
   initHorizontalPriorityChart() {
-    const datasets =  [{data: this.priority_score, backgroundColor: 'rgba(255, 255, 50, 0.7)'}];
+    const priorities = this.getResultsPriorities();
+    const labels = this.getResultsLabels();
+    const datasets =  [{data: priorities, backgroundColor: this.priorityColor}];
     this.priorityChart = new Chart(this.prioritychartRef.nativeElement, {
       type: 'horizontalBar',
+
       data: {
         // tslint:disable-next-line: max-line-length
-        labels: this.labels,
+        labels: labels,
         datasets: datasets,
       },
       options: {
         legend: {
           display: false
         },
+
         scales: {
           xAxes: [{
+            gridLines: {
+              color: '#e9e9e9',
+              zeroLineColor: 'white'
+            },
+
             ticks: {
+              fontColor: '#e9e9e9',
               beginAtZero: true,
               max: 10,
               stepValue: 1,
             },
+
             display: true
           }],
           yAxes: [{
+            gridLines: {
+              display: false,
+              zeroLineColor: 'white',
+              color: '#e9e9e9'
+          },
             ticks: {
+              fontColor: '#e9e9e9',
               beginAtZero: true,
               max: 10,
               stepValue: 1,
             },
+
             display: true
           }],
         }
@@ -287,13 +367,17 @@ export class ThankYouScreenPage implements OnInit {
   }
 
   initHorizontalMaturityChart() {
-    const datasets =  [{data: this.maturity_score, backgroundColor: 'rgba(102, 178, 255, 0.7)'}];
+    this.results.sort((a, b) => (a.maturity > b.maturity ) ? -1 : 1 ); // Sorting array by maturity
+    const maturities = this.getResultsMaturities();
+    const labels = this.getResultsLabels();
+
+    const datasets =  [{data: maturities, backgroundColor: this.maturityColor}];
 
     this.maturityChart = new Chart(this.maturitychartRef.nativeElement, {
       type: 'horizontalBar',
       data: {
         // tslint:disable-next-line: max-line-length
-        labels: this.labels,
+        labels: labels,
         // tslint:disable-next-line: object-literal-shorthand
         datasets: datasets,
       },
@@ -303,19 +387,31 @@ export class ThankYouScreenPage implements OnInit {
         },
         scales: {
           xAxes: [{
+            gridLines: {
+              color: '#e9e9e9',
+              zeroLineColor: 'white'
+            },
             ticks: {
+              fontColor: '#e9e9e9',
               beginAtZero: true,
               max: 10,
               stepValue: 1,
             },
             display: true
           }],
+
           yAxes: [{
+            gridLines: {
+              display: false,
+              color: '#e9e9e9'
+            },
             ticks: {
+              fontColor: '#e9e9e9',
               beginAtZero: true,
               max: 10,
               stepValue: 1,
             },
+
             display: true
           }],
         }
@@ -323,6 +419,37 @@ export class ThankYouScreenPage implements OnInit {
     });
   }
 
+
+  openContactPage() {
+    const modalTitle = 'Learn More';
+    const learnMore = true;
+    const cssClass = 'img-modal-css contact';
+    this.presentModal(modalTitle, learnMore, cssClass);
+  }
+
+  sendResults() {
+    const learnMore = false;
+    const cssClass = 'img-modal-css result';
+    const modalTitle = 'Send Results';
+    this.presentModal(modalTitle, learnMore, cssClass);
+  }
+
+  async presentModal(title: string, learnMore: boolean, cssClass: string) {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      showBackdrop: true,
+      backdropDismiss: true,
+      cssClass: cssClass,
+      componentProps: {
+        modalController: this.modalController,
+        title: title,
+        learnMore: learnMore,
+        organization: this.organization,
+        jobTitle: this.jobTitle
+      }
+    });
+    return await modal.present();
+  }
 }
 
 const defaultConfig = Chart.scaleService.getScaleDefaults('linear');

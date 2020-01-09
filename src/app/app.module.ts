@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,9 +25,13 @@ import { environment } from '../environments/environment';
     OAuthModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     NoopAnimationsModule,
     MatStepperModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+
     AngularFirestoreModule,
     AppRoutingModule],
   providers: [

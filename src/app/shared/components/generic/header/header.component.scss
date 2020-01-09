@@ -1,0 +1,115 @@
+.background {
+    position: relative;
+    width: 100%;
+    height: calc(100% + (100vw / 14.30066626));
+    height: calc(100% + (var(--vw, 1vw) * 100 / 14.30066626)); //calculating exact height needed to fit full screen knowing we have a skew of 4deg
+
+    //padding-bottom: 20px;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+  }
+  
+  .background:after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    width: 100%;
+    height: 100%;
+    background: white;
+    box-shadow: var(--div-shadows);
+    transform-origin: left;
+    transform: skewY(-4deg);
+  }
+  
+  .header-container{
+    padding-left: var(--div-padding-left);
+    padding-right: var(--div-padding-left);
+  
+  }
+  
+  
+  #header-content {
+    width: 100%;
+    height: calc((5 / 6) * 100%);
+    position: absolute;
+    top: 0;
+    //left: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-content: center;
+  }
+  
+  #header-logo {
+    margin: 20px;
+    margin-left: 0;
+    width: auto;
+    max-width: 220px;
+    height: auto;
+  }
+
+  #header-button {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  #header-shader {
+    height: 100%;
+    background-image: linear-gradient(
+        to top,
+        #000000,
+        rgba(0, 0, 0, 0.5),
+        transparent,
+        transparent
+      ),
+      linear-gradient(to bottom, #000000, transparent, transparent, transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  #texts {
+    max-width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+    color: white;
+  }
+
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .background {
+      //height: 110%;
+      --div-padding-left: 10%;
+    }
+
+    #header-content {
+        width: 500px;
+        max-width: 100%;
+        height: 100%;
+        //left: 10%;
+      }
+
+      #header-logo {
+        margin: 20px;
+        margin-left: 0;
+        width: auto;
+        max-width: 150px;
+        height: auto;
+      }
+
+  }
+  

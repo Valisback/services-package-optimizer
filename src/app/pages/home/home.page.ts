@@ -13,8 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HomePage implements AfterViewInit {
   @ViewChild(IonContent, {static: false}) content: IonContent;
-  @ViewChild('background', {static: false}) background: ElementRef;
 
+  title = 'Is your enterprise ready to apply innovation?';
+  subtitle = 'In this ever evolving world,'
   FORM_ID = 'hs1e1S';
   tag;
 
@@ -64,8 +65,7 @@ export class HomePage implements AfterViewInit {
     return s4() + s4() + s4() + s4() + s4();
   }
 
-  ScrollToBottom() {
-    const height = this.background.nativeElement.offsetHeight;
+  ScrollToBottom(height: number) {
     this.content.scrollToPoint(0, height, 600);
     }
 }

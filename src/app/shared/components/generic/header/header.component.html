@@ -1,0 +1,35 @@
+<div *ngIf = "loaded && vw" #background class="background" [ngStyle]="{'background': 'url('+ imgSrc +') no-repeat center center / cover', '--vw': vw + 'px'}">
+  <div id="header-shader">
+    <ion-grid class="header-container" style="height: 100%;">
+      <ion-row style="height: 100%;">
+        <ion-col
+        size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12"
+        offset-lg="3" offset-xl="3" offset-md="0" offset-sm="0" offset-xs="0">
+          <div id="header-content">
+            <div id="header-logo">
+              <img src="assets/homepage/AIE_final_CMYK_WHITE.svg" />
+            </div>
+      
+              <div id="texts">
+                <div *ngIf="homepage" id="texts-2">
+                  {{subtitle}}
+                </div>
+                <div id="texts-1">
+                  {{title}}
+                </div>
+                  <div *ngIf="lastpage" id="texts-2">
+                    {{subtitle}}
+                  </div>
+              </div>
+            </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>
+<div class="ion-activatable" id="header-button" (click)="ScrollToBottom()">
+  <div *ngIf="lastpage" id="texts-3"> View Results</div>
+  <ion-icon style="align-self: center;" name="arrow-down" mode="ios"></ion-icon>
+  <ion-ripple-effect></ion-ripple-effect>
+
+</div>

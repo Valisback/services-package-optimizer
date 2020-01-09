@@ -28,3 +28,145 @@
 * {
     font-family: Verdana  !important;
 }
+
+ion-content {
+    --background: white;
+    z-index: 1;
+    --div-shadows: inset 0 4px 4px 0 rgba(158, 139, 139, 0.16),
+    0 0 0 2px rgba(0, 0, 0, 0.08);
+    --div-padding-left: 10%;
+  }
+
+#texts-2 {
+    line-height: 29px;
+    letter-spacing: -1.17px;
+    font-size: 24px;
+    width: auto;
+    max-width: 700px;
+    padding-bottom: 8px;
+  }
+  #texts-3 {
+    line-height: 17px;
+    letter-spacing: -0.68;
+    font-size: 14px;
+    max-width: 700px;
+  }
+  
+  #texts-1 {
+    line-height: 95%;
+    letter-spacing: -3.51px;
+    font-size: 56px;
+    width: auto;
+    max-width: 700px;
+    padding-bottom: 8px;
+  }
+
+  #body-intro-text{
+    //max-width: 700px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin: 16px 0;
+    margin-left: auto;
+
+    margin-right: auto;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .section-body {
+    position: relative;
+    width: 100%;
+    padding-bottom: 10%;
+    margin-top: -1px;
+    //padding-bottom: 20px;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    padding-left: var(--div-padding-left);
+    padding-right: var(--div-padding-left);
+  }
+  
+  #body-intro-button, #body-go-button {
+    margin-top: 8px;
+    //margin-left: 20px;
+    padding: 8px 16px;
+    width: fit-content;
+    background-color: var(--ion-color-secondary);
+    box-shadow: 0 3px 3px 0 rgba(#000000, 0.16), 0 3px 3px 0 rgba(#000000, 0.23);
+    color: white;
+  }
+  
+  #body-go-button{
+    background-color: var(--ion-color-tertiary);
+  }
+
+  .section-body:after {
+    content: "";
+    position: absolute;
+    top: 98%;
+    right: 0%;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: left;
+    transform: skewY(-4deg);
+    box-shadow: var(--div-shadows);
+  
+  }
+
+  .ion-activatable {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .img-modal-css .modal-wrapper {
+    height: 80%;
+
+    max-width: 480px;
+    width: 80%;
+    //top: 10%;
+    //left: 50%;
+    //transform: translateX(-50%);
+    position: absolute; 
+    display: block;  
+ }
+
+ .result .modal-wrapper {
+  max-height: 216px;
+
+ }
+
+ .contact .modal-wrapper {
+  max-height: 512px;
+ }
+  
+ .img-modal-css ion-backdrop{
+  background: rgba($color: #000000, $alpha: 1.5);
+}
+
+  @media only screen and (max-width: 768px) {
+    #texts-1 {
+      line-height: 95%;
+      letter-spacing: -2.29px;
+      font-size: 48px;
+      max-width: 600px;
+    }
+  
+    #texts-2 {
+      line-height: 21px;
+      letter-spacing: -0.83;
+      font-size: 16px;
+      max-width: 600px;
+    }
+  
+    #texts-3 {
+      line-height: 13px;
+      letter-spacing: -0.54;
+      font-size: 11px;
+      max-width: 600px;
+    }
+
+  }

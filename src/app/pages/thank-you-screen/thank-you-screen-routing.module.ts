@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ThankYouScreenPage
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./component/modal/modal.module').then( m => m.ModalPageModule)
   }
 ];
 
