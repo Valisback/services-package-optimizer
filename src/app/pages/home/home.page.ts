@@ -2,7 +2,9 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import * as typeformEmbed from '@typeform/embed';
 import { ApiCallsService } from '../../shared/api-calls/api-calls.service';
 import { NavController, IonContent } from '@ionic/angular';
-
+import { ModalController } from '@ionic/angular';
+import { LoginPage } from '../login/login.page';
+import * as firebase from 'firebase/app';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -22,15 +24,14 @@ export class HomePage implements AfterViewInit {
   constructor(
     private apicallsService: ApiCallsService,
     private navCtrl: NavController,
+    public modalController: ModalController
   ) {}
 
   ngAfterViewInit(): void {
-    //this.openSurvey();
-    
 
   }
 
-  openSurvey() {
+   openSurvey() {
     this.tag = this.generateId();
     const popup = typeformEmbed.makePopup(
       'https://aienewyork.typeform.com/to/' + this.FORM_ID + '?tag=' + this.tag.toString(), // URL of the typeform
@@ -47,6 +48,22 @@ export class HomePage implements AfterViewInit {
       }
     );
     popup.open();
+
+  }
+
+  openLogin() {
+    if (firebase.auth().currentUser) {
+      this.openSurvey();
+    } else {
+      const cssClass = 'img-modal-css login';
+      this.presentModal(cssClass).then( data => {
+        console.log(data);
+        if (data.authenticated) {
+          this.openSurvey();
+        }
+      }
+      );
+    }
 
   }
 
@@ -67,5 +84,22 @@ export class HomePage implements AfterViewInit {
 
   ScrollToBottom(height: number) {
     this.content.scrollToPoint(0, height, 600);
+    }
+
+
+    async presentModal(cssClass: string) {
+      const modal = await this.modalController.create({
+        component: LoginPage,
+        showBackdrop: true,
+        backdropDismiss: true,
+        cssClass: cssClass,
+        mode: 'md',
+        componentProps: {
+          modalController: this.modalController,
+        }
+      });
+      await modal.present();
+      const { data } = await modal.onDidDismiss();
+      return data;
     }
 }

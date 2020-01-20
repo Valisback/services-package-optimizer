@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatStepperModule } from '@angular/material';
+import { LoginPage } from '../login/login.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import {GenericModule} from 'src/app/shared/components/generic/generic.module';
@@ -13,6 +14,7 @@ import {GenericModule} from 'src/app/shared/components/generic/generic.module';
     CommonModule,
     FormsModule,
     MatStepperModule,
+    ReactiveFormsModule,
     GenericModule,
     IonicModule,
     RouterModule.forChild([
@@ -22,6 +24,8 @@ import {GenericModule} from 'src/app/shared/components/generic/generic.module';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, LoginPage],
+  entryComponents: [LoginPage],
+
 })
 export class HomePageModule {}

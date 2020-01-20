@@ -3,6 +3,11 @@ ion-toolbar{
     --color: white;
 }
 
+.content{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 ion-input > placeholder {
     color: rgba(0, 0, 0, 0.3);
   }

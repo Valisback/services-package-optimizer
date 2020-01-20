@@ -2,104 +2,138 @@
   <app-header lastpage="true" [title]="title" [subtitle]="subtitle" (buttonClicked)="formatData($event)"></app-header>
 
   <div *ngIf="dataLoaded">
-  <div class="section-body div-1">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
-          <div id="graph-title">
-            How much of a priority and how <strong>ready</strong> are we to drive these enablers
-            today?
-          </div>
-          <canvas #matrixChart>{{ matrixChart }}</canvas>
-        </ion-col>
-        <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
-          <ion-grid  class="flex-disp ion-no-padding ion-no-margin" >
-            <ion-row>
-              <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
-                <ion-list class="legend-container ion-no-padding ion-no-margin">
-                  <ion-item class="ion-no-padding">
-                    <ion-avatar id="legend-colorBox" slot="start">
-                      <div id="colorBox-content" [ngStyle]="{'background-color': actNowColor}"></div>
-                    </ion-avatar>
-                    <ion-label>
-                      <div id="texts-2">Act now</div>
-                      <div id="texts-3">High Priority, High Maturity</div>
-                    </ion-label>
-                  </ion-item>
-                  <ion-item class="ion-no-padding">
-                    <ion-avatar id="legend-colorBox" slot="start">
-                      <div id="colorBox-content" [ngStyle]="{'background-color': canDoColor}"></div>
-                    </ion-avatar>
-                    <ion-label>
-                      <div id="texts-2">Can do</div>
-                      <div id="texts-3">Low Priority, High Maturity</div>
-                    </ion-label>
-                  </ion-item>
-                </ion-list>
-              </ion-col>
-                  <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
-                    <ion-list class="legend-container  ion-no-padding ion-no-margin" >
-                      <ion-item class="ion-no-padding">
-                        <ion-avatar slot="start" id="legend-colorBox">
-                          <div id="colorBox-content" [ngStyle]="{'background-color': fixExecutionColor}"></div>
-                        </ion-avatar>
-                        <ion-label>
-                          <div id="texts-2">Fix execution strategy</div>
-                          <div id="texts-3">High Priority, Low Maturity</div>
-                        </ion-label>
-                      </ion-item>
-                      <ion-item class="ion-no-padding">
-                        <ion-avatar slot="start" id="legend-colorBox">
-                          <div id="colorBox-content" [ngStyle]="{'background-color': avoidColor}"></div>
-                        </ion-avatar>
-                        <ion-label>
-                          <div id="texts-2">Avoid</div>
-                          <div id="texts-3">Low Priority, Low Maturity</div>
-                        </ion-label>
-                      </ion-item>
-                    </ion-list>
-                  </ion-col>
-                </ion-row>
+    <div class="section-body div-1">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="top-col align-end" size="6">
+            <ion-card class="full-height">
+              <ion-card-header>
+                <ion-card-subtitle mode="ios"> <div id="texts-2">Business Readiness</div></ion-card-subtitle>
+                <ion-card-title>
+                  <div id="texts-2">
+                    <div id="score-wrapper"><div id="score-num">{{generalPriority.toFixed(0)}}</div>/100</div>
+                  </div></ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div id="texts-3">Business readiness refers to whether your enterprise currently has or is willing and able to align, invest, support and otherwise act to establish and sustain the enabler.</div>
+              </ion-card-content>
+            </ion-card>
+
+          </ion-col>
+
+          <ion-col class="top-col align-start" size="6">
+              <ion-card class = "full-height">
+                <ion-card-header >
+                  <ion-card-subtitle mode="ios"><div id="texts-2">General Capability</div></ion-card-subtitle>
+                  <ion-card-title>
+                    <div id="texts-2">
+                      <div id="score-wrapper"><div id="score-num">{{generalMaturity.toFixed(0)}}</div>/100</div>
+                    </div>
+                  </ion-card-title>
+                 
+                </ion-card-header>
+                <ion-card-content>
+                  <div id="texts-3">Capabilities refer to the adequacy (quality and quantity) of the competencies and skills either in or available to the enterprise to perform the requirements of the enabler.</div>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
+            <div id="graph-title">
+              How <strong>proficient</strong> are we in applying innovation today?
+            </div>
+            <canvas #matrixChart>{{ matrixChart }}</canvas>
+          </ion-col>
+        
+          <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
+            <ion-grid class="flex-disp ion-no-padding ion-no-margin">
+              <ion-row>
+                <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
+                  <ion-list class="legend-container ion-no-padding ion-no-margin">
+                    <ion-item class="ion-no-padding">
+                      <ion-avatar id="legend-colorBox" slot="start">
+                        <div id="colorBox-content" [ngStyle]="{'background-color': actNowColor}"></div>
+                      </ion-avatar>
+                      <ion-label>
+                        <div id="texts-2">Launch-worthy</div>
+                        <div id="texts-3">High Readiness, High Capability</div>
+                      </ion-label>
+                    </ion-item>
+                    <ion-item class="ion-no-padding">
+                      <ion-avatar id="legend-colorBox" slot="start">
+                        <div id="colorBox-content" [ngStyle]="{'background-color': canDoColor}"></div>
+                      </ion-avatar>
+                      <ion-label>
+                        <div id="texts-2">Resource-rich</div>
+                        <div id="texts-3">Low Readiness, High Capability</div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+                <ion-col class="ion-no-padding" size-lg="12" size-xl="12" size-md="6" size-sm="6" size-xs="6">
+                  <ion-list class="legend-container  ion-no-padding ion-no-margin">
+                    <ion-item class="ion-no-padding">
+                      <ion-avatar slot="start" id="legend-colorBox">
+                        <div id="colorBox-content" [ngStyle]="{'background-color': fixExecutionColor}"></div>
+                      </ion-avatar>
+                      <ion-label>
+                        <div id="texts-2">Well-intentioned</div>
+                        <div id="texts-3">High Readiness, Low Capability</div>
+                      </ion-label>
+                    </ion-item>
+                    <ion-item class="ion-no-padding">
+                      <ion-avatar slot="start" id="legend-colorBox">
+                        <div id="colorBox-content" [ngStyle]="{'background-color': avoidColor}"></div>
+                      </ion-avatar>
+                      <ion-label>
+                        <div id="texts-2">Vulnerable</div>
+                        <div id="texts-3">Low Readiness, Low Capability</div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+              </ion-row>
             </ion-grid>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
-  <div class="section-body div-2">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-          <div id="graph-title">
-          Enablers with the highest <strong>priority</strong> today
-          </div>
-          <canvas #priorityChart>{{ priorityChart }}</canvas>
-        </ion-col>
-        <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
-          <div id="graph-title">
-          Enablers with the highest <strong>maturity</strong> today
-          </div>
-          <canvas #maturityChart>{{ maturityChart }}</canvas>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+    <div class="section-body div-2">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
+            <div id="graph-title">
+              Enablers with the highest <strong>business readiness</strong> scores
+            </div>
+            <canvas #priorityChart>{{ priorityChart }}</canvas>
+          </ion-col>
+          <ion-col class="flex-disp" size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12">
+            <div id="graph-title">
+              Enablers with the highest <strong>capabilities</strong> today
+            </div>
+            <canvas #maturityChart>{{ maturityChart }}</canvas>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
 
-  <div class="section-body div-3">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
-          <div id="graph-title" >
-          Looking at the enablers with the highest priority, where are the <strong>gaps</strong> we face today?
-          </div>
-        </ion-col>
-        <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
-          <canvas #barChart>{{ barChart }}</canvas>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div class="section-body div-3">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="flex-disp" size-lg="4" size-xl="4" size-md="12" size-sm="12" size-xs="12">
+            <div id="graph-title">
+              Looking at the enablers with the highest business readiness, where are the <strong>gaps</strong> we face today?
+            </div>
+          </ion-col>
+          <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
+            <canvas #barChart>{{ barChart }}</canvas>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <app-footer lastpage="true" (learnMoreClicked)="openContactPage()" (resultsClicked)="sendResults()"></app-footer>
   </div>
-  <app-footer lastpage = "true" (learnMoreClicked) = "openContactPage()" (resultsClicked) = "sendResults()"></app-footer>
-</div>
 
 </ion-content>

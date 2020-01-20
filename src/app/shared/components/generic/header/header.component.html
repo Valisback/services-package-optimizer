@@ -1,4 +1,4 @@
-<div *ngIf = "loaded && vw" #background class="background" [ngStyle]="{'background': 'url('+ imgSrc +') no-repeat center center / cover', '--vw': vw + 'px'}">
+<div *ngIf = "loaded && vw" #background class="background" [ngStyle]="{'background': 'url('+ imgSrc +') no-repeat center center / cover', '--vw': vw + 'px', 'background-attachment': 'fixed'}">
   <div id="header-shader">
     <ion-grid class="header-container" style="height: 100%;">
       <ion-row style="height: 100%;">
@@ -7,7 +7,7 @@
         offset-lg="3" offset-xl="3" offset-md="0" offset-sm="0" offset-xs="0">
           <div id="header-content">
             <div id="header-logo">
-              <img src="assets/homepage/AIE_final_CMYK_WHITE.svg" />
+              <a href = "home"><img src="assets/homepage/AIE_final_CMYK_WHITE.svg" /></a>
             </div>
       
               <div id="texts">
@@ -17,9 +17,9 @@
                 <div id="texts-1">
                   {{title}}
                 </div>
-                  <div *ngIf="lastpage" id="texts-2">
+                  <!-- <div *ngIf="lastpage" id="texts-2">
                     {{subtitle}}
-                  </div>
+                  </div> -->
               </div>
             </div>
         </ion-col>

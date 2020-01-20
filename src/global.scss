@@ -143,8 +143,25 @@ ion-content {
   max-height: 512px;
  }
   
+ .login .modal-wrapper{
+  max-height: 288px;
+ }
+
+.validation-toast{
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+}
+
+
  .img-modal-css ion-backdrop{
   background: rgba($color: #000000, $alpha: 1.5);
+}
+
+.loading-spinner{
+  --background: transparent;
+ --spinner-color: var(--ion-color-secondary);
 }
 
   @media only screen and (max-width: 768px) {
@@ -167,6 +184,10 @@ ion-content {
       letter-spacing: -0.54;
       font-size: 11px;
       max-width: 600px;
+    }
+
+    .validation-toast{
+      max-width: 100%;
     }
 
   }

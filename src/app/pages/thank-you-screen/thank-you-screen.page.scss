@@ -1,11 +1,10 @@
 ion-content {
   --background: white;
+  --genPadding: 10%;
 }
-
-
 .section-body{
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: calc(var(--genPadding)/2);
+  padding-right: calc(var(--genPadding)/2);
 }
 .div-1 {
   background: white;
@@ -23,6 +22,79 @@ ion-content {
 
 .div-3::after {
   background: var(--ion-color-secondary);
+}
+
+.top-col{
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+
+.align-end{
+  justify-content: flex-end;
+  padding-right: 8px; //calc(var(--genPadding)/2);
+}
+
+.align-start{
+  justify-content: flex-start;
+  padding-left: 8px; //calc(var(--genPadding)/2);
+}
+
+ion-card{
+  width: 100%;
+  max-width: 384px;
+  margin: 0 !important;
+  border-radius: 2px !important;
+}
+
+ion-card-header{
+  padding: 16px;
+  padding-bottom: 0;
+}
+
+ion-card-content {
+  padding: 16px;
+  padding-top: 0;
+}
+
+ion-card #texts-2 {
+  color: black;
+  padding: 0px;
+}
+
+ion-card-header{
+  padding: 16px;
+  padding-bottom: 0;
+}
+
+ion-card-title #texts-2 {
+    font-weight: normal;
+}
+
+#score-wrapper{
+  padding: 16px 0;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: baseline;
+  align-items: baseline;
+}
+
+#score-num{
+  color: var(--ion-color-secondary);
+  line-height: 95%;
+  letter-spacing: -1.51px;
+  font-size: 56px;
+
 }
 
 #graph-title{
@@ -51,6 +123,10 @@ ion-content {
 
 ion-card {
   --background: white;
+}
+
+.full-height{
+  height: 100%;
 }
 
 ion-card-title {
@@ -97,6 +173,22 @@ ion-card-title {
 }
 
 @media only screen and (max-width: 768px) {
+  
+.top-col{
+  padding-top: 8px;
+}
+  ion-content {
+    --background: white;
+    --genPadding: 16px;
+  }
+
+  #score-num{
+    line-height: 38px;
+    letter-spacing: -1.56;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
   #graph-title{
     line-height: 29px;
     letter-spacing: -1.17px;
@@ -107,5 +199,26 @@ ion-card-title {
 @media only screen and (max-width: 1024px){
   .flex-disp {
     align-items: initial!important;
+  }
+
+  
+}
+
+@media only screen and (min-width: 1024px) {
+  ion-card{
+    box-shadow: none;
+  }
+
+  .top-col{
+    padding-bottom: calc(var(--genPadding)/2);
+  }
+  .align-end{
+    justify-content: flex-end;
+    padding-right: calc(var(--genPadding)/2);
+  }
+  
+  .align-start{
+    justify-content: flex-start;
+    padding-left: calc(var(--genPadding)/2);
   }
 }

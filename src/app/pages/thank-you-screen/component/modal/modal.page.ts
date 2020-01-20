@@ -13,14 +13,13 @@ import { ToastController } from '@ionic/angular';
 export class ModalPage implements OnInit {
   @Input() title: string;
   @Input() learnMore = false;
-
   @Input() modalController: ModalController;
   @Input() jobTitle: string;
   @Input() organization: string;
 
 
   infoFormGroup: FormGroup;
-
+  link: string;
 
   constructor(
     private db: AngularFireDatabase,
@@ -31,6 +30,7 @@ export class ModalPage implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.link = window.location.href;
   }
 
   createForm() {
@@ -61,7 +61,9 @@ export class ModalPage implements OnInit {
   onSubmit() {
     const data = Object.assign({}, this.infoFormGroup.value);
     const email = data.email;
-    const date = new Date();
+    const date = Date();
+    const organization = this.organization;
+
 
     if (this.infoFormGroup.valid === false) {
       console.log('not valid', this.infoFormGroup);
@@ -71,28 +73,36 @@ export class ModalPage implements OnInit {
     if (this.learnMore) {
       const name = data.firstname + ' ' + data.lastname;
       const message = data.message;
- 
-      
       const html = `
       <div> From: ${name} </div>
       <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
       <div> Email: <a href = "mailto: ${email}">${email}</a></div>
+      <div> Link to submitter results: ${this.link}</div>
       <div> Date: ${date} </div>
       <div> Message: ${message} </div>
        `;
 
-      const formRequest = { name, email , message, date, html };
-      this.db.list('/messages').push(formRequest); 
+      const formRequest = {name, organization, email , message, date, html };
+      this.db.list('/messages').push(formRequest);
 
     } else {
-
-      const html = `
-      <div> Email: <a href = "mailto: ${email}">${email}</a></div>
-      <div> Date: ${date} </div>
+      const OwnerHtml = `
+      <div> A New Form has just been submitted! </div>
+      <div> Submitter information: </div>
+      <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
+      <div> Email of submitter: <a href = "mailto: ${email}">${email}</a></div>
+      <div> Link to submitter results: ${this.link}</div>
+      <div> Date of submission: ${date} </div>
        `;
 
-      const formRequest = {email, date, html };
-      this.db.list('/messages').push(formRequest); // Set a different db address for those specifc requests
+      const ClientHtml = `
+       <div> Thank you for completing the assessment with the Capgemini Applied Innovation Exchange! </div>
+       <div> You can find your results here: ${this.link}</div>
+       <div> Submitted at: ${date} </div>
+        `;
+
+      const formRequest = {organization, email, date, OwnerHtml, ClientHtml };
+      this.db.list('/submits').push(formRequest);
     }
 
     this.dismissModal();
@@ -102,10 +112,35 @@ export class ModalPage implements OnInit {
   }
 
   async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Your message has been sent successfully.',
-      duration: 2000
-    });
+    let toast;
+    if (this.learnMore) {
+      toast = await this.toastController.create({
+        message: 'Message Sent.',
+        duration: 2000,
+        cssClass: 'validation-toast',
+        buttons: [
+          {
+            text: 'Ok',
+            role: 'cancel',
+          }
+        ],
+        color: 'tertiary',
+      });
+    } else {
+      toast = await this.toastController.create({
+        message: 'Results Sent.',
+        duration: 2000,
+        cssClass: 'validation-toast',
+        buttons: [
+          {
+            text: 'Ok',
+            role: 'cancel',
+          }
+        ],
+        color: 'tertiary',
+      });
+    }
+
     toast.present();
 
   }

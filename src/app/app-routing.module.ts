@@ -8,6 +8,10 @@ const routes: Routes = [
     path: 'thank-you-screen',
     loadChildren: () => import('./pages/thank-you-screen/thank-you-screen.module').then( m => m.ThankYouScreenPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
 ];
 
 @NgModule({

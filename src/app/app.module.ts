@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 @NgModule({
@@ -31,7 +32,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     MatStepperModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-
+    AngularFireAuthModule,
     AngularFirestoreModule,
     AppRoutingModule],
   providers: [
