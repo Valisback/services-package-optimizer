@@ -85,7 +85,9 @@ export class ThankYouScreenPage implements OnInit {
 
 
   async ngOnInit() {
-    this.loading = await this.loadingController.create({ spinner: 'bubbles', cssClass: 'loading-spinner', duration: 7000});
+    this.loading = await this.loadingController.create({ spinner: 'bubbles',
+    message: 'Retrieving your answers...',
+    cssClass: 'loading-spinner', duration: 30000});
     this.loading.present();
     this.route.queryParams.subscribe(params => {
       if (params.tag !== undefined) {
@@ -111,8 +113,8 @@ export class ThankYouScreenPage implements OnInit {
 async presentToast() {
   let toast;
   toast = await this.toastController.create({
-      message: 'Impossible to retrieve corresponding form, please try again...',
-      duration: 2000,
+      message: 'Impossible to retrieve corresponding form, please try to refresh the page or verify your connection...',
+      duration: 3000,
       cssClass: 'validation-toast',
       buttons: [
         {

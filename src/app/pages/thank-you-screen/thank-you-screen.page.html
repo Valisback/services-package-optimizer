@@ -41,7 +41,8 @@
         <ion-row>
           <ion-col class="flex-disp" size-lg="8" size-xl="8" size-md="12" size-sm="12" size-xs="12">
             <div id="graph-title">
-              How <strong>proficient</strong> are we in applying innovation today?
+              How <strong>proficient</strong> are we in applying innovation today?<br>
+              <div id="texts-3">Hover over the dots to reveal the corresponding enablers</div>
             </div>
             <canvas #matrixChart>{{ matrixChart }}</canvas>
           </ion-col>
@@ -78,7 +79,7 @@
                         <div id="colorBox-content" [ngStyle]="{'background-color': fixExecutionColor}"></div>
                       </ion-avatar>
                       <ion-label>
-                        <div id="texts-2">Well-intentioned</div>
+                        <div id="texts-2">Well-positioned</div>
                         <div id="texts-3">High Readiness, Low Capability</div>
                       </ion-label>
                     </ion-item>

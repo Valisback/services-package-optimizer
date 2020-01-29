@@ -32,8 +32,8 @@ exports.onMessageReceived = functions.database.ref('/messages/{pushKey}').onWrit
 
     
     const mailOptions = {
-      //to: 'cpek@capgemini.com',
-      to: 'valentin.pereira@capgemini.com',
+      to: 'cpek@capgemini.com',
+      //to: 'valentin.pereira@capgemini.com',
       subject: `[Enterprise Readiness Tool] New Message from ${val.name} - ${val.organization}`,
       html: val.html
     };
