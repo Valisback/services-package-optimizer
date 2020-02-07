@@ -1,8 +1,8 @@
 .background {
     position: relative;
     width: 100%;
-    height: calc((100/98)*100% + (100vw / 14.30066626));
-    height: calc((100/98)*100% + (var(--vw, 1vw) * 100 / 14.30066626)); //calculating exact height needed to fit full screen knowing we have a skew of 4deg
+    height: calc((100/98)*100% + 2px + (100vw / 14.30066626));
+    height: calc((100/98)*100% + 2px + (var(--vw, 1vw) * 100 / 14.30066626)); //calculating exact height needed to fit full screen knowing we have a skew of 4deg
 
     //padding-bottom: 20px;
     overflow: hidden;

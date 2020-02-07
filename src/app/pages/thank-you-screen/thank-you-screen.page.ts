@@ -336,7 +336,7 @@ async presentToast() {
   }
 
   orderResultsByPriority() {
-    this.results = this.results.sort((a, b) => (a.priority > b.priority ) ? -1 : 1 ); // Sorting array by priority
+    this.results = this.results.sort((a, b) => (a.priority > b.priority ) ? 1 : -1 ); // Sorting array by priority
   }
 
   async initBarChart() {
@@ -446,7 +446,7 @@ async presentToast() {
   }
 
   async initHorizontalMaturityChart() {
-    this.results.sort((a, b) => (a.maturity > b.maturity ) ? -1 : 1 ); // Sorting array by maturity
+    this.results.sort((a, b) => (a.maturity > b.maturity ) ? 1 : -1 ); // Sorting array by maturity
     const maturities = this.getResultsMaturities();
     const labels = this.getResultsLabels();
 
