@@ -38,7 +38,7 @@ exports.onMessageReceived = functions.database.ref('/messages/{pushKey}').onWrit
       html: val.html
     };
     return mailTransport.sendMail(mailOptions).then(() => {
-      return console.log('Mail sent to', mailOptions.to)
+      return console.log('Mail sent to', mailOptions.to);
     });
   });
 

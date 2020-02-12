@@ -30,6 +30,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "@typeform/api-client": "^1.6.1",
+    "@typeform/embed": "^0.15.3",
     "angular-oauth2-oidc": "^8.0.4",
     "chart.js": "^2.9.3",
     "cordova-android": "8.1.0",

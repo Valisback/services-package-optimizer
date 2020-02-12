@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import * as firebase from 'firebase/app';
 import { ToastController } from '@ionic/angular';
 
 
@@ -59,59 +60,66 @@ export class ModalPage implements OnInit {
   }
 
   onSubmit() {
-    const data = Object.assign({}, this.infoFormGroup.value);
-    const email = data.email;
-    const date = Date();
-    const organization = this.organization;
 
-
-    if (this.infoFormGroup.valid === false) {
-      console.log('not valid', this.infoFormGroup);
-      return;
-    }
-
-    if (this.learnMore) {
-      const name = data.firstname + ' ' + data.lastname;
-      const message = data.message;
-      const html = `
-      <div> From: ${name} </div>
-      <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
-      <div> Email: <a href = "mailto: ${email}">${email}</a></div>
-      <div> Link to submitter results: ${this.link}</div>
-      <div> Date: ${date} </div>
-      <div> Message: ${message} </div>
-       `;
-
-      const formRequest = {name, organization, email , message, date, html };
-      this.db.list('/messages').push(formRequest);
-
+    if (!firebase.auth().currentUser) {
+      this.dismissModal();
+      this.presentErrorToast();
     } else {
-      const OwnerHtml = `
-      <div> A New Form has just been submitted! </div>
-      <div> Submitter information: </div>
-      <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
-      <div> Email of submitter: <a href = "mailto: ${email}">${email}</a></div>
-      <div> Link to submitter results: ${this.link}</div>
-      <div> Date of submission: ${date} </div>
-       `;
-
-      const ClientHtml = `
-       <div> Thank you for completing the assessment with the Capgemini Applied Innovation Exchange! </div>
-       <div> You can find your results here: ${this.link}</div>
-       <div> Submitted at: ${date} </div>
-        `;
-
-      const formRequest = {organization, email, date, OwnerHtml, ClientHtml };
-      this.db.list('/submits').push(formRequest);
+      const data = Object.assign({}, this.infoFormGroup.value);
+      const email = data.email;
+      const date = Date();
+      const organization = this.organization;
+  
+  
+      if (this.infoFormGroup.valid === false) {
+        console.log('not valid', this.infoFormGroup);
+        return;
+      }
+  
+      if (this.learnMore) {
+        const name = data.firstname + ' ' + data.lastname;
+        const message = data.message;
+        const html = `
+        <div> From: ${name} </div>
+        <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
+        <div> Email: <a href = "mailto: ${email}">${email}</a></div>
+        <div> Link to submitter results: ${this.link}</div>
+        <div> Date: ${date} </div>
+        <div> Message: ${message} </div>
+         `;
+  
+        const formRequest = {name, organization, email , message, date, html };
+        this.db.list('/messages').push(formRequest);
+  
+      } else {
+        const OwnerHtml = `
+        <div> A New Form has just been submitted! </div>
+        <div> Submitter information: </div>
+        <div> Job Title: ${this.jobTitle} at ${this.organization} </div>
+        <div> Email of submitter: <a href = "mailto: ${email}">${email}</a></div>
+        <div> Link to submitter results: ${this.link}</div>
+        <div> Date of submission: ${date} </div>
+         `;
+  
+        const ClientHtml = `
+         <div> Thank you for completing the assessment with the Capgemini Applied Innovation Exchange! </div>
+         <div> You can find your results here: ${this.link}</div>
+         <div> Submitted at: ${date} </div>
+          `;
+  
+        const formRequest = {organization, email, date, OwnerHtml, ClientHtml };
+        this.db.list('/submits').push(formRequest);
+      }
+  
+      this.dismissModal();
+      this.infoFormGroup.reset();
+      this.presentValidToast();
     }
-
-    this.dismissModal();
-    this.infoFormGroup.reset();
-    this.presentToast();
+    
 
   }
 
-  async presentToast() {
+  async presentValidToast() {
     let toast;
     if (this.learnMore) {
       toast = await this.toastController.create({
@@ -141,6 +149,24 @@ export class ModalPage implements OnInit {
       });
     }
 
+    toast.present();
+
+  }
+
+  async presentErrorToast() {
+    let toast;
+      toast = await this.toastController.create({
+        message: 'You need to be authenticated to perform this action.',
+        duration: 2000,
+        cssClass: 'validation-toast',
+        buttons: [
+          {
+            text: 'Ok',
+            role: 'cancel',
+          }
+        ],
+        color: 'danger',
+      });
     toast.present();
 
   }
