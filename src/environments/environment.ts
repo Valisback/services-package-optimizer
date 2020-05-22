@@ -4,17 +4,16 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: 'AIzaSyC_m9E38gg9OZguUP3AnVfh5jka1_SR2Kw',
-    authDomain: 'innovation-assessment.firebaseapp.com',
-    databaseURL: 'https://innovation-assessment.firebaseio.com',
-    projectId: 'innovation-assessment',
-    storageBucket: 'innovation-assessment.appspot.com',
-    messagingSenderId: '1060258371920',
-    appId: '1:1060258371920:web:62b6206d6b9cd0f3e37455',
-    measurementId: 'G-HC38F8CV1Y'
-  }
+    apiKey: "AIzaSyCIbdC-zkXDMckJqsXU9WnmBWsqtmKKVeU",
+    authDomain: "edison-plan-selection.firebaseapp.com",
+    databaseURL: "https://edison-plan-selection.firebaseio.com",
+    projectId: "edison-plan-selection",
+    storageBucket: "edison-plan-selection.appspot.com",
+    messagingSenderId: "446340446143",
+    appId: "1:446340446143:web:cb09a3fab57f711aaa530a",
+    measurementId: "G-5E5FNGR5H8",
+  },
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

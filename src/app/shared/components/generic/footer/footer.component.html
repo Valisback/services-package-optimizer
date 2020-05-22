@@ -1,29 +1,57 @@
-<div class = "section-body-last div-4" [ngStyle] = "{'background': lastpage? 'var(--ion-color-secondary)' : 'var(--ion-color-tertiary)'}">
+<div
+  class="section-body-last div-4"
+  [ngStyle]="{
+    background: lastpage
+      ? 'var(--ion-color-secondary)'
+      : 'var(--ion-color-tertiary)'
+  }"
+>
   <ion-grid>
     <ion-row>
-
-      <ion-col id="column-1-right"
-      size-lg="6" size-xl="6" size-md="12" size-sm="12" size-xs="12"
-      offset-lg="3" offset-xl="3" offset-md="0" offset-sm="0" offset-xs="0" >
+      <ion-col
+        id="column-1-right"
+        size-lg="6"
+        size-xl="6"
+        size-md="12"
+        size-sm="12"
+        size-xs="12"
+        offset-lg="3"
+        offset-xl="3"
+        offset-md="0"
+        offset-sm="0"
+        offset-xs="0"
+      >
         <div id="body-intro-text">
           <div id="texts-2">
-            Applied Innovation Changes Everything.
+            Live your home in a new way.
           </div>
           <div id="texts-3">
-            At Capgemini's Applied Innovation Exchange, we provide an immersive and transformative environment to explore, discover, test and apply innovation.
-            We provide rapid deployment with speed and scale.
-            We can enable you to sustain the value of the innovation.
+            We are the leading energy operator in Italy, with over 130 years of
+            history behind us. The biggest plants in the country that use water
+            power belong to Edison. Today, we are continuing to grow in order to
+            build a sustainable energy future together. Our mission is to stand
+            with our clients, providing intelligent, competitive and sustainable
+            solutions. We supply electricity, gas and energy and environmental
+            services to families and businesses.
           </div>
         </div>
-        <div *ngIf="lastpage" class = "button-wrapper">
-          <div class = "ion-activatable" id="body-go-button" (click) = "buttonClicked('result')">
-            <div  id = "texts-2">
+        <div *ngIf="lastpage" class="button-wrapper">
+          <div
+            class="ion-activatable"
+            id="body-go-button"
+            (click)="buttonClicked('result')"
+          >
+            <div id="texts-2">
               Send Results
             </div>
             <ion-ripple-effect></ion-ripple-effect>
           </div>
-          <div class = "ion-activatable" id="body-go-button" (click) = "buttonClicked('more')">
-            <div  id = "texts-2">
+          <div
+            class="ion-activatable"
+            id="body-go-button"
+            (click)="buttonClicked('more')"
+          >
+            <div id="texts-2">
               Learn More
             </div>
             <ion-ripple-effect></ion-ripple-effect>
@@ -31,15 +59,13 @@
         </div>
         <div id="footer">
           <div *ngIf="!lastpage" id="texts-2">
-            Please reach out to your local Capgemini AIE lead for more information.
+            Please reach out to Julia Arendt for more information.
           </div>
           <div id="footer-img">
-            <img src="assets/homepage/AIE_final_CMYK_WHITE.svg">
+            <img src="assets/homepage/1024px-Edison_edf-white.svg.png" />
           </div>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-    
 </div>
