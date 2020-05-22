@@ -32,6 +32,7 @@
     "@typeform/api-client": "^1.6.1",
     "@typeform/embed": "^0.15.3",
     "angular-oauth2-oidc": "^8.0.4",
+    "bfg": "^0.3.0",
     "chart.js": "^2.9.3",
     "cordova-android": "8.1.0",
     "cordova-plugin-inappbrowser": "^3.1.0",

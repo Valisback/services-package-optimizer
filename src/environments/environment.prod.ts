@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyCIbdC-zkXDMckJqsXU9WnmBWsqtmKKVeU",
+    apiKey: "AIzaSyBg5DEvK99yjRUUxn000Yk4HNiHcEeipt8",
     authDomain: "edison-plan-selection.firebaseapp.com",
     databaseURL: "https://edison-plan-selection.firebaseio.com",
     projectId: "edison-plan-selection",
