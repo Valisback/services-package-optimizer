@@ -11,6 +11,7 @@ import { NavController, IonContent } from "@ionic/angular";
 import { ModalController } from "@ionic/angular";
 import { LoginPage } from "../login/login.page";
 import * as firebase from "firebase/app";
+require("firebase/auth");
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
